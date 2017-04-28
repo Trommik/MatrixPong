@@ -60,10 +60,14 @@ class PongGame
 {
  public:
 
+	boolean renderNeeded = true;
+
 	//void set(int x, int y, color c);
 	void set(renderData Data);
 	void setScore(uint8_t score, bool side);
 	void reset();
+
+	void removePaddel(int side);
 
 	color getColor(int x, int y);
 
@@ -73,7 +77,7 @@ class PongGame
 
 };
 
-extern PongGame pong;
+extern PongGame pongGame;
 
 int toI(float val);
 

@@ -4,10 +4,6 @@
 
 #include <Adafruit_NeoPixel.h>
 
-struct renderData red = {0, 0, 4 };
-struct renderData green = { 2, 0, 2 };
-struct renderData blue = { 0, 2, 5 };
-
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(289, 6, NEO_GRB + NEO_KHZ800);
 
 void setup()
@@ -46,18 +42,15 @@ void loop()
 	pong.set(puck.renderLast()); // render last Puck 
 	pong.set(puck.renderLastLast()); // render lastlast Puck 
 
-	//pong.set(red);
-	//pong.set(green);
-	//pong.set(blue);
-
 	renderStrip();
 
-	int leftLenght = map(scoreLeft, 0, 17, 0, 4);
-	int rightLenght = map(scoreRight, 0, 17, 0, 4);
+	//int leftLenght = map(scoreLeft, 0, 17, 0, 4);
+	//int rightLenght = map(scoreRight, 0, 17, 0, 4);
 
-	leftPlayer.setHeight(START_PADDEL_HEIGHT-leftLenght);
-	rightPlayer.setHeight(START_PADDEL_HEIGHT-rightLenght);
+	//leftPlayer.setHeight(START_PADDEL_HEIGHT-leftLenght);
+	//rightPlayer.setHeight(START_PADDEL_HEIGHT-rightLenght);
 
+	/*
 	int waitTime;
 	if(scoreLeft < scoreRight){
 		waitTime = scoreRight;
@@ -67,16 +60,30 @@ void loop()
 	waitTime = WIDTH - waitTime;
 	waitTime = map(waitTime, 0, 17, 10, 50);
 	//Serial.println(waitTime);
-	delay(waitTime);
+	delay(waitTime);*/
+
+	delay(100);
 }
 
 void paddelsMove()
 {
-	uint8_t left = map(analogRead(A1), 0, 1023, 1, HEIGHT - 1 - leftPlayer.getHeight());
-	uint8_t right = map(analogRead(A0), 0, 1023, 1, HEIGHT - 1 - rightPlayer.getHeight());
+	uint8_t left = map(analogRead(A1), 0, 1023, 1, HEIGHT - leftPlayer.getHeight());
 
 	leftPlayer.move(left);
-	rightPlayer.move(right);
+
+
+
+	if(puck.vel.x > 0){
+		rightPlayer.move(puck.pos.y - 2);
+	}else{
+		if (rightPlayer.getPosY() + rightPlayer.getHeight() / 2 > HEIGHT / 2){
+			rightPlayer.moveUp();
+		}else if (rightPlayer.getPosY() - rightPlayer.getHeight() / 2 < HEIGHT / 2+1){
+			rightPlayer.moveDown();
+		}
+	}
+
+	
 }
 
 void renderStrip()

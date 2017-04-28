@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MatrixPong", "MatrixPong.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Adafruit_NeoPixel", "..\libraries\Adafruit_NeoPixel\Adafruit_NeoPixel.vcxitems", "{51AAC997-2E33-4799-B05D-7D0197FE913A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Adafruit_NeoPixel", "..\..\Arduino\libraries\Adafruit_NeoPixel\Adafruit_NeoPixel.vcxitems", "{51AAC997-2E33-4799-B05D-7D0197FE913A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

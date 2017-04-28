@@ -18,7 +18,41 @@ uint8_t scoreRight;
 void PongGame::set(renderData data)
 {
 	if (data.x < WIDTH && data.y < HEIGHT) {
+		if (data.t == PUCK){
+			for (int y = 0; y < HEIGHT; y++) {
+				for (int x = 0; x < WIDTH; x++) {
+					if (type[x][y] == PUCK)
+						type[x][y] = BLANK;
+					if (type[x][y] == TRAIL1)
+						type[x][y] = BLANK;
+					if (type[x][y] == TRAIL2)
+						type[x][y] = BLANK;
+				}
+			}
+		}
+
 		type[data.x][data.y] = data.t;
+
+		renderNeeded = true;
+	}
+}
+
+void PongGame::removePaddel(int side)
+{
+	if(side == LEFT_SIDE){ // Left side
+		for (int y = 0; y < HEIGHT; y++) {
+			for (int x = 0; x < WIDTH; x++) {
+				if (type[x][y] == PADDEL_LEFT)
+					type[x][y] = BLANK;
+			}
+		}
+	}else if(side == RIGHT_SIDE){
+		for (int y = 0; y < HEIGHT; y++) {
+			for (int x = 0; x < WIDTH; x++) {
+				if (type[x][y] == PADDEL_RIGHT)
+					type[x][y] = BLANK;
+			}
+		}
 	}
 }
 
@@ -36,6 +70,8 @@ void PongGame::setScore(uint8_t score, bool side)
 			type[(WIDTH - 1) - s][WIDTH -1] = SCORE_RIGHT;
 		}
 	}
+
+	renderNeeded = true;
 }
 
 void PongGame::reset()
@@ -45,6 +81,8 @@ void PongGame::reset()
 			type[x][y] = BLANK;
 		}
 	}
+
+	renderNeeded = true;
 }
 
 color PongGame::getColor(int x, int y)
@@ -81,4 +119,4 @@ int toI(float val)
 	return i;
 }
 
-PongGame pong;
+PongGame pongGame;

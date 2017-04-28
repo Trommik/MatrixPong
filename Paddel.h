@@ -20,6 +20,7 @@ class Paddel
 	 void move(uint8_t y);
 	 
 	 int getHeight();
+	 int getPosY();
 	 void setHeight(int h);
 
  private:

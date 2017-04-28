@@ -15,9 +15,6 @@ void Puck::init()
 
 renderData Puck::render()
 {
-	puckRenderData[2] = puckRenderData[1];
-	puckRenderData[1] = puckRenderData[0];
-
 	renderData data = { toI(pos.x), toI(pos.y), PUCK };
 
 	puckRenderData[0] = data;
@@ -28,27 +25,16 @@ renderData Puck::render()
 
 renderData Puck::renderLast()
 {
-	if (puckRenderData[1].t == PUCK)
-		puckRenderData[1].t = TRAIL1;
-
 	return puckRenderData[1];
 }
 
 renderData Puck::renderLastLast()
 {
-
-	if (puckRenderData[2].t == TRAIL1)
-		puckRenderData[2].t = TRAIL2;
 	return puckRenderData[2];
 }
 
 void Puck::update()
 {
-	//Serial.print("Pos X: ");
-	//Serial.print(int(pos.x));
-	//Serial.print("  ::  Pos Y: ");
-	//Serial.println(int(pos.y));
-
 	edges();
 
 	if (rightPlayer.checkCollision(&puck))
@@ -57,6 +43,15 @@ void Puck::update()
 		puck.vel.x *= -1;
 
 	pos.add(vel);
+
+	puckRenderData[2] = puckRenderData[1];
+	puckRenderData[1] = puckRenderData[0];
+
+	if (puckRenderData[1].t == PUCK)
+		puckRenderData[1].t = TRAIL1;
+
+	if (puckRenderData[2].t == TRAIL1)
+		puckRenderData[2].t = TRAIL2;
 }
 
 void Puck::edges()
@@ -72,6 +67,7 @@ void Puck::edges()
 		scoreRight += 1;
 		if(scoreRight > WIDTH)
 			scoreRight = 0;
+		pongGame.setScore(scoreRight, RIGHT_SIDE); // right side = top side
 	}
 
 	if (pos.x + vel.x > (WIDTH + 0.5 / 2)) { // rightside of window
@@ -81,6 +77,7 @@ void Puck::edges()
 		scoreLeft += 1;
 		if (scoreLeft > WIDTH)
 			scoreLeft = 0;
+		pongGame.setScore(scoreLeft, LEFT_SIDE); // left side = bottom side
 	}
 }
 /*
